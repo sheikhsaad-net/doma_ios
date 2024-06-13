@@ -1,6 +1,6 @@
 # doma_church_frontend
 
-A new Flutter project for DoMa.
+A new Flutter project.
 
 ## Getting Started
 
