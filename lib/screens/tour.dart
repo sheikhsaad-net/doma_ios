@@ -33,7 +33,7 @@ class MyTour extends StatelessWidget {
                     ),
                   ),
                   Container(
-                    padding: const EdgeInsets.only(top: 110, left: 30),
+                    padding: const EdgeInsets.only(top: 80, left: 30),
                     child: const Text(
                       'Acquista Ticket',
                       style: TextStyle(color: Colors.white, fontSize: 28),
@@ -41,7 +41,7 @@ class MyTour extends StatelessWidget {
                   ),
                   // Box Icon
                   Positioned(
-                    top: 50,
+                    top: 20,
                     left: 20,
                     child: IconButton(
                       onPressed: () {
@@ -77,7 +77,7 @@ class MyTour extends StatelessWidget {
                   ),
                   // Profile Icon
                   Positioned(
-                    top: 50,
+                    top: 20,
                     right: 20,
                     child: IconButton(
                       onPressed: () {
@@ -114,7 +114,7 @@ class MyTour extends StatelessWidget {
 
                   // Buttons
                   Positioned(
-                    top: 180,
+                    top: 140,
                     left: 30,
                     right: 30, // Occupy the full width
                     child: SingleChildScrollView(
@@ -184,7 +184,7 @@ class MyTour extends StatelessWidget {
                   ),
 
                   Positioned(
-                    top: 265,
+                    top: 225,
                     left: 30,
                     right: 30, // Occupy the full width
                     child: SingleChildScrollView(
@@ -253,7 +253,7 @@ class MyTour extends StatelessWidget {
                     ),
                   ),
                   Positioned(
-                    top: 350,
+                    top: 310,
                     left: 30,
                     right: 30, // Occupy the full width
                     child: SingleChildScrollView(
@@ -322,7 +322,7 @@ class MyTour extends StatelessWidget {
                     ),
                   ),
                   Positioned(
-                    top: 435,
+                    top: 395,
                     left: 30,
                     right: 30, // Occupy the full width
                     child: SingleChildScrollView(
@@ -391,7 +391,7 @@ class MyTour extends StatelessWidget {
                     ),
                   ),
                   Positioned(
-                    top: 520,
+                    top: 480,
                     left: 30,
                     right: 30, // Occupy the full width
                     child: SingleChildScrollView(
@@ -460,7 +460,7 @@ class MyTour extends StatelessWidget {
                     ),
                   ),
                   Positioned(
-                    top: 605,
+                    top: 565,
                     left: 30,
                     right: 30, // Occupy the full width
                     child: SingleChildScrollView(

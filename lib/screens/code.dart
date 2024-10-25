@@ -25,166 +25,191 @@ class MyCode extends StatelessWidget {
             return Scaffold(
               body: Stack(
                 children: [
-                  // Background Image
                   Positioned.fill(
                     child: Image.asset(
                       'assets/page-light.png',
                       fit: BoxFit.cover,
                     ),
                   ),
-                  const Padding(
-                    padding: EdgeInsets.only(top: 110, left: 30),
-                    child: Text(
-                      'Tour Completo',
+                  // Heading
+                  Container(
+                    padding: const EdgeInsets.only(top: 80, left: 30),
+                    child: const Text(
+                      'Tour Completo - Italiano',
                       style: TextStyle(color: Colors.white, fontSize: 28),
                     ),
                   ),
-                  // Slider with Developers Section
-                  Positioned(
-                    top: 180, // Adjust the top position as needed
-                    left: 30,
-                    right: 30,
-                    child: Container(
-                      color: Colors.white,
-                      child: CarouselSlider(
-                        options: CarouselOptions(
-                          height: 480, // Adjust the height as needed
-                          viewportFraction: 1,
-                          enlargeCenterPage: false,
-                          enableInfiniteScroll: false,
+                  SingleChildScrollView(
+                    padding: const EdgeInsets.only(
+                      top: 130,
+                      left: 30,
+                      right: 30,
+                      bottom: 250,
+                    ), // Adjust top padding
+                    child: Column(
+                      // Wrap in Column for multiple children in the scroll view
+                      children: [
+                        Container(
+                          color: Colors.white,
+                          child: CarouselSlider(
+                            options: CarouselOptions(
+                              height: 480, // Adjust the height as needed
+                              viewportFraction: 1,
+                              enlargeCenterPage: true,
+                              enableInfiniteScroll: false,
+                            ),
+                            items: [
+                              _buildDeveloperSection(
+                                context,
+                                'Caravaggio Experience (IT)',
+                                'assets/tour/caravaggio.png',
+                                'Caravaggio',
+                                'assets/tour/barcode.png',
+                              ),
+                              _buildDeveloperSection(
+                                context,
+                                'Experience 1 (IT)',
+                                'assets/tour/001tour.png',
+                                'Storia di Piazza S.Domenico',
+                                'assets/tour/001barcode.png',
+                              ),
+                              _buildDeveloperSection(
+                                context,
+                                'Experience 2 (IT)',
+                                'assets/tour/002tour.png',
+                                'Contenuti Cappella Carafa',
+                                'assets/tour/002barcode.png',
+                              ),
+                              _buildDeveloperSection(
+                                context,
+                                'Experience 3 (IT)',
+                                'assets/tour/003tour.png',
+                                'Contenuti Cappella Brancaccio',
+                                'assets/tour/003barcode.png',
+                              ),
+                              _buildDeveloperSection(
+                                context,
+                                'Experience 4 (IT)',
+                                'assets/tour/004tour.png',
+                                'Esplorazione Ballatoio Sagrestia',
+                                'assets/tour/004barcode.png',
+                              ),
+                              _buildDeveloperSection(
+                                context,
+                                'Experience 5 (IT)',
+                                'assets/tour/005tour.png',
+                                'Cripta',
+                                'assets/tour/005barcode.png',
+                              ),
+                              _buildDeveloperSection(
+                                context,
+                                'Experience 6 (IT)',
+                                'assets/tour/006tour.png',
+                                'Antica Biblioteca',
+                                'assets/tour/006barcode.png',
+                              ),
+                              _buildDeveloperSection(
+                                context,
+                                'Mute Experience',
+                                'assets/tour/tour.png',
+                                'Mute',
+                                'assets/tour/mutebarcode.png',
+                              ),
+                              _buildDeveloperSection(
+                                context,
+                                'Stop Experience',
+                                'assets/tour/tour.png',
+                                'Stop',
+                                'assets/tour/stopbarcode.png',
+                              ),
+                            ],
+                          ),
                         ),
-                        items: [
-                          _buildDeveloperSection(
-                            context,
-                            'Caravaggio Experience',
-                            'assets/tour.png',
-                            'Caravaggio',
-                            'assets/barcode.png',
+                      ],
+                    ),
+                  ),
+                  Positioned(
+                    left: 0,
+                    right: 0,
+                    child: Container(
+                      color: const Color(
+                          0xFFd2bb84), // Change this to your desired color
+                      padding: const EdgeInsets.fromLTRB(
+                          20, 20, 20, 10), // Adjust the top padding here
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          // Box Icon (Menu)
+                          IconButton(
+                            onPressed: () {
+                              showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return Align(
+                                    alignment: Alignment.topLeft,
+                                    child: SlideTransition(
+                                      position: Tween<Offset>(
+                                        begin: const Offset(-1.0, 0.0),
+                                        end: Offset.zero,
+                                      ).animate(
+                                        CurvedAnimation(
+                                          parent: ModalRoute.of(context)!
+                                              .animation!,
+                                          curve: Curves.easeInOut,
+                                        ),
+                                      ),
+                                      child: const FractionallySizedBox(
+                                        widthFactor: 0.7,
+                                        heightFactor: 1,
+                                        child: MyMenu(),
+                                      ),
+                                    ),
+                                  );
+                                },
+                              );
+                            },
+                            icon: const Icon(
+                              Icons.grid_view_sharp,
+                              color: Colors.white,
+                              size: 30,
+                            ),
                           ),
-                          _buildDeveloperSection(
-                            context,
-                            'Experience 1',
-                            'assets/001tour.png',
-                            'Storia di Piazza S.Domenico',
-                            'assets/001barcode.png',
-                          ),
-                          _buildDeveloperSection(
-                            context,
-                            'Experience 2',
-                            'assets/002tour.png',
-                            'Contenuti Cappella Carafa',
-                            'assets/002barcode.png',
-                          ),
-                          _buildDeveloperSection(
-                            context,
-                            'Experience 3',
-                            'assets/003tour.png',
-                            'Contenuti Cappella Brancaccio',
-                            'assets/003barcode.png',
-                          ),
-                          _buildDeveloperSection(
-                            context,
-                            'Experience 4',
-                            'assets/004tour.png',
-                            'Esplorazione Ballatoio Sagrestia',
-                            'assets/004barcode.png',
-                          ),
-                          _buildDeveloperSection(
-                            context,
-                            'Experience 5',
-                            'assets/005tour.png',
-                            'Cripta',
-                            'assets/005barcode.png',
-                          ),
-                          _buildDeveloperSection(
-                            context,
-                            'Experience 6',
-                            'assets/006tour.png',
-                            'Antica Biblioteca',
-                            'assets/006barcode.png',
-                          ),
-                          _buildDeveloperSection(
-                            context,
-                            'Stop Experience',
-                            'assets/tour.png',
-                            'Stop',
-                            'assets/stopbarcode.png',
+                          // Profile Icon
+                          IconButton(
+                            onPressed: () {
+                              showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return Align(
+                                    alignment: Alignment.topRight,
+                                    child: SlideTransition(
+                                      position: Tween<Offset>(
+                                        begin: const Offset(1.0, 0.0),
+                                        end: Offset.zero,
+                                      ).animate(
+                                        CurvedAnimation(
+                                          parent: ModalRoute.of(context)!
+                                              .animation!,
+                                          curve: Curves.easeInOut,
+                                        ),
+                                      ),
+                                      child: const FractionallySizedBox(
+                                        widthFactor: 0.7,
+                                        heightFactor: 2,
+                                        child: MyProfile(),
+                                      ),
+                                    ),
+                                  );
+                                },
+                              );
+                            },
+                            icon: const Icon(
+                              Icons.account_circle_outlined,
+                              color: Colors.white,
+                              size: 30,
+                            ),
                           ),
                         ],
-                      ),
-                    ),
-                  ),
-                  // Box Icon
-                  Positioned(
-                    top: 50,
-                    left: 20,
-                    child: IconButton(
-                      onPressed: () {
-                        // Show profile modal with slide-in animation
-                        showDialog(
-                          context: context,
-                          builder: (context) {
-                            return Align(
-                              alignment: Alignment.topLeft,
-                              child: SlideTransition(
-                                position: Tween<Offset>(
-                                  begin: const Offset(-1.0, 0.0),
-                                  end: Offset.zero,
-                                ).animate(CurvedAnimation(
-                                  parent: ModalRoute.of(context)!.animation!,
-                                  curve: Curves.easeInOut,
-                                )),
-                                child: const FractionallySizedBox(
-                                  widthFactor: 0.7,
-                                  heightFactor: 1,
-                                  child: MyMenu(),
-                                ),
-                              ),
-                            );
-                          },
-                        );
-                      },
-                      icon: const Icon(
-                        Icons.grid_view_sharp,
-                        color: Colors.white,
-                        size: 30,
-                      ),
-                    ),
-                  ),
-                  // Profile Icon
-                  Positioned(
-                    top: 50,
-                    right: 20,
-                    child: IconButton(
-                      onPressed: () {
-                        // Show profile modal with slide-in animation
-                        showDialog(
-                          context: context,
-                          builder: (context) {
-                            return Align(
-                              alignment: Alignment.topRight,
-                              child: SlideTransition(
-                                position: Tween<Offset>(
-                                  begin: const Offset(1.0, 0.0),
-                                  end: Offset.zero,
-                                ).animate(CurvedAnimation(
-                                  parent: ModalRoute.of(context)!.animation!,
-                                  curve: Curves.easeInOut,
-                                )),
-                                child: const FractionallySizedBox(
-                                  widthFactor: 0.7,
-                                  heightFactor: 2,
-                                  child: MyProfile(),
-                                ),
-                              ),
-                            );
-                          },
-                        );
-                      },
-                      icon: const Icon(
-                        Icons.account_circle_outlined,
-                        color: Colors.white,
-                        size: 30,
                       ),
                     ),
                   ),

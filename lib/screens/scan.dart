@@ -1,16 +1,22 @@
-import 'dart:typed_data';
-
-import 'package:doma_church_frontend/screens/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:doma_church_frontend/widget/nav.dart';
 import 'package:doma_church_frontend/widget/profile.dart';
 import 'package:doma_church_frontend/widget/menu.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:mobile_scanner/mobile_scanner.dart';
+import 'package:qr_bar_code_scanner_dialog/qr_bar_code_scanner_dialog.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class MyScan extends StatelessWidget {
+class MyScan extends StatefulWidget {
   const MyScan({super.key});
+
+  @override
+  State<MyScan> createState() => _MyScanState();
+}
+
+class _MyScanState extends State<MyScan> {
+  final _qrBarCodeScannerDialogPlugin = QrBarCodeScannerDialog();
+  String? scannedCode;
+  bool _isProcessing = false;
 
   @override
   Widget build(BuildContext context) {
@@ -29,27 +35,24 @@ class MyScan extends StatelessWidget {
             return Scaffold(
               body: Stack(
                 children: [
-                  // Background Image
                   Positioned.fill(
                     child: Image.asset(
                       'assets/page-dark.png',
                       fit: BoxFit.cover,
                     ),
                   ),
-                  Container(
-                    padding: const EdgeInsets.only(top: 110, left: 30),
-                    child: const Text(
-                      'Scan barcode',
-                      style: TextStyle(color: Colors.white, fontSize: 28),
-                    ),
-                  ),
-                  // Box Icon
+                  // Container(
+                  //   padding: const EdgeInsets.only(top: 110, left: 30),
+                  //   child: const Text(
+                  //     'Scan QR Code',
+                  //     style: TextStyle(color: Colors.white, fontSize: 28),
+                  //   ),
+                  // ),
                   Positioned(
-                    top: 50,
+                    top: 20,
                     left: 20,
                     child: IconButton(
                       onPressed: () {
-                        // Show profile modal with slide-in animation
                         showDialog(
                           context: context,
                           builder: (context) {
@@ -79,13 +82,11 @@ class MyScan extends StatelessWidget {
                       ),
                     ),
                   ),
-                  // Profile Icon
                   Positioned(
-                    top: 50,
+                    top: 20,
                     right: 20,
                     child: IconButton(
                       onPressed: () {
-                        // Show profile modal with slide-in animation
                         showDialog(
                           context: context,
                           builder: (context) {
@@ -116,45 +117,62 @@ class MyScan extends StatelessWidget {
                     ),
                   ),
                   Positioned(
-                    top: 200, // Adjust this value for desired placement
+                    top: 200,
                     left: 30,
                     right: 30,
                     bottom: 300,
-                    child: MobileScanner(
-                      controller: MobileScannerController(
-                        detectionSpeed: DetectionSpeed.noDuplicates,
+                    child: Center(
+                      child: ElevatedButton(
+                        onPressed: () {
+                          if (!_isProcessing) {
+                            _qrBarCodeScannerDialogPlugin.getScannedQrBarCode(
+                              context: context,
+                              onCode: (code) {
+                                setState(() {
+                                  // Extract URL by removing "code scanned: " part if it exists
+                                  if (code!.startsWith("Code scanned = ")) {
+                                    scannedCode = code.replaceFirst(
+                                        "Code scanned = ", "");
+                                  } else {
+                                    scannedCode =
+                                        code; // If the format is different
+                                  }
+                                  _isProcessing = false;
+                                });
+
+                                // Check if the scanned code is a valid URL
+                                if (scannedCode != null &&
+                                    Uri.tryParse(scannedCode!)?.hasScheme ==
+                                        true) {
+                                  // Directly open the URL without printing
+                                  launchUrl(Uri.parse(scannedCode!),
+                                      mode: LaunchMode.inAppWebView);
+                                } else {
+                                  // Show the SnackBar with just the URL
+
+                                  launchUrl(
+                                    Uri.parse(scannedCode!),
+                                    mode: LaunchMode
+                                        .inAppWebView, // Opens the URL in the external browser
+                                  );
+
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text(
+                                          scannedCode!), // Display only the URL
+                                    ),
+                                  );
+                                }
+                              },
+                            );
+                            _isProcessing =
+                                true; // Set processing to true while scanning
+                          }
+                        },
+                        child: const Text('Scansiona il codice QR'),
                       ),
-                      onDetect: (capture) {
-                        final List<Barcode> barcodes = capture.barcodes;
-                        // ignore: unused_local_variable
-                        final Uint8List? image = capture.image;
-                        for (final barcode in barcodes) {
-                          debugPrint('Barcode found! ${barcode.rawValue}');
-                          final url = barcode.rawValue;
-                          // Navigate to splash screen
-                          Navigator.of(context)
-                              .pushReplacement(MaterialPageRoute(
-                            builder: (context) =>
-                                const SplashScreen(), // Replace SplashScreen with your actual splash screen widget
-                          ));
-                          // Wait for a short duration, then launch the URL
-                          Future.delayed(const Duration(seconds: 1), () {
-                            launchUrl(Uri.parse(url!),
-                                mode: LaunchMode.platformDefault);
-                          });
-                        }
-                      },
                     ),
                   ),
-                  const Positioned(
-                    bottom: 250,
-                    left: 30, // Adjust this value for desired placement
-                    child: Text(
-                      'Scan any barcode for audio...',
-                      style: TextStyle(color: Colors.white, fontSize: 22),
-                    ),
-                  ),
-                  // Navigation Bar
                   const MyNavBar(),
                 ],
               ),

@@ -4,7 +4,7 @@ import 'package:doma_church_frontend/widget/profile.dart';
 import 'package:doma_church_frontend/widget/menu.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:doma_church_frontend/screens/tour.dart';
-import 'package:doma_church_frontend/screens/scan.dart';
+import 'package:doma_church_frontend/screens/videoscan.dart';
 
 class MyHome extends StatelessWidget {
   const MyHome({super.key});
@@ -35,7 +35,7 @@ class MyHome extends StatelessWidget {
                   ),
                   // Box Icon
                   Positioned(
-                    top: 50,
+                    top: 20,
                     left: 20,
                     child: IconButton(
                       onPressed: () {
@@ -72,13 +72,13 @@ class MyHome extends StatelessWidget {
                   ),
                   // Logo
                   Positioned(
-                    top: 50,
+                    top: 20,
                     left: MediaQuery.of(context).size.width / 2 - 50,
                     child: Image.asset('assets/logo.png', width: 120),
                   ),
                   // Profile Icon
                   Positioned(
-                    top: 50,
+                    top: 20,
                     right: 20,
                     child: IconButton(
                       onPressed: () {
@@ -117,8 +117,11 @@ class MyHome extends StatelessWidget {
                   // Buttons
                   Positioned(
                     bottom: 220,
-                    left: 65,
+                    left: 0,
+                    right: 0,
                     child: Row(
+                      mainAxisAlignment: MainAxisAlignment
+                          .center, // Centers the row horizontally
                       children: [
                         Container(
                           decoration: BoxDecoration(
@@ -141,7 +144,7 @@ class MyHome extends StatelessWidget {
                                   Icon(
                                     Icons.calendar_month_outlined,
                                     color: Colors.white,
-                                    size: 80, // Increase icon size
+                                    size: 80,
                                   ),
                                   SizedBox(height: 4),
                                   Text(
@@ -165,7 +168,7 @@ class MyHome extends StatelessWidget {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => const MyScan()),
+                                    builder: (context) => const VideoScan()),
                               );
                             },
                             child: const Padding(
@@ -176,11 +179,9 @@ class MyHome extends StatelessWidget {
                                   Icon(
                                     Icons.qr_code_scanner_outlined,
                                     color: Colors.white,
-                                    size: 80, // Increase icon size
+                                    size: 80,
                                   ),
-                                  SizedBox(
-                                      height:
-                                          4), // Added space between icon and text
+                                  SizedBox(height: 4),
                                   Text(
                                     'Scan',
                                     style: TextStyle(

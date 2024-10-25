@@ -7,7 +7,9 @@ import 'package:doma_church_frontend/screens/forgot_password.dart';
 import 'package:doma_church_frontend/screens/home.dart';
 import 'package:doma_church_frontend/screens/splash.dart';
 import 'package:doma_church_frontend/screens/code.dart';
+import 'package:doma_church_frontend/screens/code_en.dart';
 import 'package:doma_church_frontend/screens/info.dart';
+import 'package:doma_church_frontend/screens/scan.dart';
 
 void main() {
   runApp(const MyApp());
@@ -29,7 +31,9 @@ class MyApp extends StatelessWidget {
         'splash': (context) => const SplashScreen(),
         'ticket': (context) => const MyTicket(),
         'code': (context) => const MyCode(),
+        'code_en': (context) => const MyCodeeng(),
         'info': (context) => const MyInfo(),
+        'scan': (context) => const MyScan(),
       },
       initialRoute: 'splash', // Set the initial route to SplashScreen
     );
