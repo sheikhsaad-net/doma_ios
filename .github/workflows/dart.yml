@@ -29,7 +29,6 @@ jobs:
         run: |
           echo "$DEVELOPMENT_MOBILEPROVISION" | base64 --decode --output ./ios/Runner/DoMa_Development.mobileprovision
           echo "$IOS_DEVELOPMENT_CERT" | base64 --decode --output ./ios/Runner/ios_development.p12
-<<<<<<< HEAD
           # # Import the certificate into the keychain
           # security create-keychain -p "" build.keychain
           # security import ./ios/Runner/ios_development.p12 -k build.keychain -P ${{ secrets.IOS_CERT_PASSWORD }} -T /usr/bin/codesign
@@ -37,9 +36,6 @@ jobs:
           # security unlock-keychain -p "" build.keychain
           # security set-key-partition-list -S apple-tool:,apple: -s -k "" build.keychain
 
-=======
-          
->>>>>>> 1206a1549ea2a8f1dd7f5840a343ff4565669974
       - name: Build iOS Release
         run: flutter build ios --release
 
