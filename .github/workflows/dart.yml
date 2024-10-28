@@ -27,14 +27,22 @@ jobs:
 
       - name: Decode Provisioning Profile and Certificate
         run: |
+          echo "Development Mobile Provision: ${DEVELOPMENT_MOBILEPROVISION:0:10}..."  # Outputs first 10 chars for sanity check
+          echo "iOS Development Cert: ${IOS_DEVELOPMENT_CERT:0:10}..."
+
           echo "$DEVELOPMENT_MOBILEPROVISION" | base64 --decode --output ./ios/Runner/DoMa_Development.mobileprovision
           echo "$IOS_DEVELOPMENT_CERT" | base64 --decode --output ./ios/Runner/ios_development.p12
-          # # Import the certificate into the keychain
-          # security create-keychain -p "immensive2017" build.keychain
-          # security import ./ios/Runner/ios_development.p12 -k build.keychain -P ${{ secrets.IOS_CERT_PASSWORD }} -T /usr/bin/codesign
-          # security list-keychains -s build.keychain
-          # security unlock-keychain -p "immensive2017" build.keychain
-          # security set-key-partition-list -S apple-tool:,apple: -s -k "immensive2017" build.keychain
+
+          # Import the certificate into the keychain
+          security create-keychain -p "immensive2017" build.keychain
+          
+          # Ensure IOS_CERT_PASSWORD is correctly referenced
+          echo "Importing certificate..."
+          security import ./ios/Runner/ios_development.p12 -k build.keychain -P "${{ secrets.IOS_CERT_PASSWORD }}" -T /usr/bin/codesign
+          
+          security list-keychains -s build.keychain
+          security unlock-keychain -p "immensive2017" build.keychain
+          security set-key-partition-list -S apple-tool:,apple: -s -k "immensive2017" build.keychain
 
       - name: Build iOS Release
         run: flutter build ios --release
