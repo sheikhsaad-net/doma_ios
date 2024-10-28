@@ -31,15 +31,18 @@ jobs:
           echo "iOS Development Cert: ${IOS_DEVELOPMENT_CERT:0:10}..."
 
           echo "$DEVELOPMENT_MOBILEPROVISION" | base64 --decode --output ./ios/Runner/DoMa_Development.mobileprovision
-          echo "$IOS_DEVELOPMENT_CERT" | base64 --decode --output ./ios/Runner/ios_development.p12
+          echo "$IOS_DEVELOPMENT_CERT" | base64 --decode --output ./ios/Runner/ios_development.cer
+
+          # List files in the directory for debugging
+          echo "Listing files in ./ios/Runner"
+          ls -la ./ios/Runner
 
           # Import the certificate into the keychain
           security create-keychain -p "immensive2017" build.keychain
           
-          # Use the CERT_PASSWORD directly
           echo "Importing certificate..."
-          security import ./ios/Runner/ios_development.p12 -k build.keychain -P "immensive2017" -T /usr/bin/codesign || echo "Certificate import failed"
-          
+          security import ./ios/Runner/ios_development.cer -k build.keychain -T /usr/bin/codesign || echo "Certificate import failed"
+
           security list-keychains -s build.keychain
           security unlock-keychain -p "immensive2017" build.keychain
           security set-key-partition-list -S apple-tool:,apple: -s -k "immensive2017" build.keychain
