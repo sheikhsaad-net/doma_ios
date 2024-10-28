@@ -37,15 +37,9 @@ jobs:
           echo "Listing files in ./ios/Runner"
           ls -la ./ios/Runner
 
-          # Import the certificate into the keychain
-          security create-keychain -p "immensive2017" build.keychain
-          
-          echo "Importing certificate..."
-          security import ./ios/Runner/ios_development.cer -k build.keychain -T /usr/bin/codesign || echo "Certificate import failed"
-
-          security list-keychains -s build.keychain
-          security unlock-keychain -p "immensive2017" build.keychain
-          security set-key-partition-list -S apple-tool:,apple: -s -k "immensive2017" build.keychain
+          # Import the certificate without using keychain
+          echo "Importing certificate without keychain..."
+          security import ./ios/Runner/ios_development.cer -T /usr/bin/codesign || echo "Certificate import failed"
 
       - name: Build iOS Release
         run: flutter build ios --release
