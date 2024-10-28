@@ -47,7 +47,6 @@ class MyCodeeng extends StatelessWidget {
                       bottom: 250,
                     ), // Adjust top padding
                     child: Column(
-                      // Wrap in Column for multiple children in the scroll view
                       children: [
                         Container(
                           color: Colors.white,
